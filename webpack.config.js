@@ -1,9 +1,29 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  mode: 'development',
+  entry: {
+    app: './src/index.js',
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+    port: 9005,
+    hot: true
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: '开发环境',
+      // inject: 'head'
+    }),
+    new webpack.HotMudleReplacementPlugin()
+  ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
